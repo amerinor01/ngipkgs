@@ -15,6 +15,9 @@
   inputs.sops-nix.url = "github:Mic92/sops-nix";
   inputs.buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.buildbot-nix.url = "github:Mic92/buildbot-nix";
+  inputs.nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
+  inputs.nixpkgs-esp-dev.inputs.flake-utils.follows = "flake-utils";
+  inputs.nixpkgs-esp-dev.inputs.nixpkgs.follows = "nixpkgs";
 
   # See <https://github.com/ngi-nix/ngipkgs/issues/24> for plans to support Darwin.
   inputs.systems.url = "github:nix-systems/default-linux";
@@ -27,6 +30,7 @@
     pre-commit-hooks,
     dream2nix,
     buildbot-nix,
+    nixpkgs-esp-dev,
     ...
   } @ inputs: let
     # Take Nixpkgs' lib and update it with the definitions in ./lib.nix
@@ -69,7 +73,7 @@
     importNgiPackages = pkgs:
       import ./pkgs/by-name {
         inherit (pkgs) lib;
-        inherit dream2nix pkgs;
+        inherit dream2nix nixpkgs-esp-dev pkgs;
       };
 
     overlay = final: prev: importNgiPackages prev;
