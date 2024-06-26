@@ -162,17 +162,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1688116651,
-        "narHash": "sha256-nTfW3urSRcwwStvZekBHROcqPazgujuAu5nEMxQGIdM=",
+        "lastModified": 1688122764,
+        "narHash": "sha256-w4eZW0UOkifa008Lcw1izpLbE/AjLnRfCpzaXzMcnII=",
         "owner": "mirrexagon",
         "repo": "nixpkgs-esp-dev",
-        "rev": "20bf18621907483ddb7e3566a3849dfd73d7c629",
+        "rev": "08e4dff0460dad6c25edb4c1c9c53928f2449542",
         "type": "github"
       },
       "original": {
         "owner": "mirrexagon",
         "repo": "nixpkgs-esp-dev",
-        "rev": "20bf18621907483ddb7e3566a3849dfd73d7c629",
+        "rev": "08e4dff0460dad6c25edb4c1c9c53928f2449542",
         "type": "github"
       }
     },

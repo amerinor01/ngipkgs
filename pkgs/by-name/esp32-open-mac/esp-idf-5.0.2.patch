@@ -1,0 +1,13 @@
+diff --git a/main/main.c b/main/main.c
+index 1bc5d44..6b245bc 100644
+--- a/main/main.c
++++ b/main/main.c
+@@ -14,7 +14,7 @@
+ #error "This uses low-level hardware peripherals and hardcoded addresses, it is only tested on the plain ESP32 for now"
+ #endif
+ 
+-#if (!(ESP_IDF_VERSION_MAJOR == 5 && ESP_IDF_VERSION_MINOR == 0 && ESP_IDF_VERSION_PATCH == 1))
++#if (!(ESP_IDF_VERSION_MAJOR == 5 && ESP_IDF_VERSION_MINOR == 0 && ESP_IDF_VERSION_PATCH == 2))
+ #error "This project currently still uses the proprietary wifi library for initialization, this was only tested with ESP-IDF v5.0.1"
+ #endif
+ 
