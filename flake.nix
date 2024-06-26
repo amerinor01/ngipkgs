@@ -15,9 +15,9 @@
   inputs.sops-nix.url = "github:Mic92/sops-nix";
   inputs.buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.buildbot-nix.url = "github:Mic92/buildbot-nix";
-  inputs.nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
-  inputs.nixpkgs-esp-dev.inputs.flake-utils.follows = "flake-utils";
-  inputs.nixpkgs-esp-dev.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev?rev=20bf18621907483ddb7e3566a3849dfd73d7c629";
+  # inputs.nixpkgs-esp-dev.inputs.flake-utils.follows = "flake-utils";
+  # inputs.nixpkgs-esp-dev.inputs.nixpkgs.follows = "nixpkgs-stable";
 
   # See <https://github.com/ngi-nix/ngipkgs/issues/24> for plans to support Darwin.
   inputs.systems.url = "github:nix-systems/default-linux";

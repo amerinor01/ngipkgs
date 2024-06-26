@@ -4,6 +4,14 @@
   fetchFromGitHub,
   nixpkgs-esp-dev,
 }:
+# let correct-esp-dev = nixpkgs-esp-dev.packages.x86_64-linux.esp-idf-full;
+let correct-esp-dev = nixpkgs-esp-dev.packages.x86_64-linux.esp-idf-full.override {
+rev = "v5.0.1";
+sha256 = "sha256-kyCEoA8synodDfYdN8gq2/ezacxz5DFOD9wrPDZC89U=";
+};
+
+in
+
 stdenv.mkDerivation {
   pname = "esp32-open-mac";
   version = "unstable-2024-05-26";
@@ -17,5 +25,5 @@ stdenv.mkDerivation {
     hash = "sha256-TBgCUIsI4efrpWnucYL2A2Zj3bt52Sx0IErG5Stcdx0=";
   };
 
-  nativeBuildInputs = [ esp-idf-full cmake ];
+  nativeBuildInputs = [ correct-esp-dev cmake ];
 }
