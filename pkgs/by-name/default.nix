@@ -1,67 +1,57 @@
 {
   lib,
   dream2nix,
-  rust-overlay,
   pkgs,
-}: let
+}:
+let
   baseDirectory = ./.;
 
-  inherit
-    (builtins)
-    pathExists
-    readDir
-    ;
+  inherit (builtins) pathExists readDir;
 
-  inherit
-    (lib.attrsets)
-    mapAttrs
-    concatMapAttrs
-    ;
+  inherit (lib.attrsets) mapAttrs concatMapAttrs;
 
-  names = name: type:
-    if type != "directory"
-    then assert name == "README.md" || name == "default.nix"; {}
-    else {${name} = baseDirectory + "/${name}";};
+  names =
+    name: type:
+    if type != "directory" then
+      assert name == "README.md" || name == "default.nix";
+      { }
+    else
+      { ${name} = baseDirectory + "/${name}"; };
 
   packageDirectories = concatMapAttrs names (readDir baseDirectory);
 
-  overlays = [
-    rust-overlay.overlays.default
-  ];
-
-  callModule = module: let
-    evaluated = lib.evalModules {
-      specialArgs = {
-        dream2nix = import dream2nix;
-        # rust-overlay = import overlays;
-        packageSets.nixpkgs = pkgs // rust-overlay.overlays.default;
+  callModule =
+    module:
+    let
+      evaluated = lib.evalModules {
+        specialArgs = {
+          dream2nix = import dream2nix;
+          # rust-overlay = import overlays;
+          packageSets.nixpkgs = pkgs;
+        };
+        modules = [
+          module
+          {
+            paths.projectRoot = ../..;
+            paths.projectRootFile = "flake.nix";
+            paths.package = module;
+            paths.lockFile = "lock.json";
+          }
+        ];
       };
-      modules = [
-        module
-        {
-          paths.projectRoot = ../..;
-          paths.projectRootFile = "flake.nix";
-          paths.package = module;
-          paths.lockFile = "lock.json";
-        }
-      ];
-    };
-  in
+    in
     evaluated.config.public;
 
-  callPackage = pkgs.newScope (
-    self // {inherit callPackage;}
-  );
+  callPackage = pkgs.newScope (self // { inherit callPackage; });
 
-  self =
-    mapAttrs (
-      _: directory:
-        if pathExists (directory + "/package.nix")
-        then callPackage (directory + "/package.nix") {}
-        else if pathExists (directory + "/dream2.nix")
-        then callModule (directory + "/dream2.nix")
-        else throw "No package.nix or dream2.nix found in ${directory}"
-    )
-    packageDirectories;
+  self = mapAttrs (
+    _: directory:
+    if pathExists (directory + "/package.nix") then
+      callPackage (directory + "/package.nix") { }
+    else if pathExists (directory + "/dream2.nix") then
+      callModule (directory + "/dream2.nix")
+    else
+      throw "No package.nix or dream2.nix found in ${directory}"
+  ) packageDirectories;
 in
-  self
+self
