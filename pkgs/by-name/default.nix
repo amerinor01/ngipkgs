@@ -1,6 +1,7 @@
 {
   lib,
   dream2nix,
+  rust-overlay,
   pkgs,
 }: let
   baseDirectory = ./.;
@@ -24,11 +25,16 @@
 
   packageDirectories = concatMapAttrs names (readDir baseDirectory);
 
+  overlays = [
+    rust-overlay.overlays.default
+  ];
+
   callModule = module: let
     evaluated = lib.evalModules {
       specialArgs = {
         dream2nix = import dream2nix;
-        packageSets.nixpkgs = pkgs;
+        # rust-overlay = import overlays;
+        packageSets.nixpkgs = pkgs // rust-overlay.overlays.default;
       };
       modules = [
         module
